@@ -4,16 +4,26 @@ class Welcome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-       date: new Date()
-     }
+      date: new Date(),// 更新 date
+      test: '1'
+    }
     setInterval(() => {
       this.setState({
-        date: new Date() // 更新 date
+        date: new Date(), // 更新 date
+        test: 'setInterval'
       })
+    }, 5000)
+    console.log('我已经初始化好props和state')
+  }
+  componentWillMount() {
+    this.setState({
+      date: new Date(), // 更新 date
+      test: 'componentWillMount'
     })
+    console.log('运行到这里的话，说明马上就要运行 render 了')
   }
   render() {
-    console.log(this.props)
+    console.log('恩，这里是render')
     return (
       <div>
         <h1>Hello,{this.props.name}</h1>
@@ -21,6 +31,36 @@ class Welcome extends React.Component {
       </div>
     )
   }
+  componentDidMount() {
+    this.setState({
+      date: new Date(), // 更新 date
+      test: 'componentDidMount'
+    })
+    console.log('已经挂载到页面里了')
+  }
+  componentWillReceiveProps() {
+    this.setState({
+      date: new Date(), // 更新 date
+      test: 'componentWillReceiveProps'
+    }) 
+  }
+  shouldComponentUpdate() {
+    this.setState({
+      date: new Date(), // 更新 date
+      test: 'componentWillReceiveProps'
+    }) 
+    return true;
+  }
+  componentWillUpdate() {
+    console.log('将会更新')
+  }
+  componentDidUpdate() {
+    console.log('更新完了')
+  }
+  componentWillUnmount() {
+    console.log('要死了')
+  }
+
 }
 
 export default Welcome
