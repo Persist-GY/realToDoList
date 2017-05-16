@@ -1,0 +1,26 @@
+*{
+  margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+ *::after{
+   box-sizing: border-box;
+ }
+ *::before{
+   box-sizing: border-box;
+ }
+ ul,ol,dl{
+   list-style:none;
+ }
+ a{
+   color: inherit;
+ }
+ ol {
+     margin-top: 20px;
+ }
+ ol>li {
+     padding: 10px 5px;
+     border: 1px solid purple;
+     border-radius: 5px;
+     margin-top: 5px;
+ }
