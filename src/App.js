@@ -42,7 +42,7 @@ class App extends Component {
     );
   }
 
-  //随时监听input输入改变，是为了解决在点击回车添加todo时，输入框置空
+  //监听input输入改变，是为了解决在点击回车添加todo时，输入框置空
   changeTitle(event) {
     this.setState({
       newTodo: event.target.value,
@@ -64,7 +64,7 @@ class App extends Component {
     })
   }
 
-  //设置完成 未完成
+//设置完成 未完成
   toggle(e, todo) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)

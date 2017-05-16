@@ -63,7 +63,7 @@ class Welcome extends React.Component {
 
 }
 
-export default Welcome
+export {Welcome} 
 // export表示导出一个对象，就像任务1中的foo.js在index.js中import,可以使用foo函数。不加export,其他文件只会拿到一个空对象
 //default 默认导出后边这个对象
 //尝试不加default 在其他文件无法找到这个Welcome这个类，其他文件拿到undefined
