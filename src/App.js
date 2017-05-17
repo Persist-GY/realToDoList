@@ -4,13 +4,15 @@ import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import 'normalize.css'
 import './reset.css'
+import * as localStore from './localStore'
+
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       newTodo: '',
-      todoList: []
+      todoList: localStore.load('todoList') || []
     }
   }
   render() {
@@ -48,6 +50,7 @@ class App extends Component {
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
+   
   }
 
   //添加待办事项
@@ -62,18 +65,24 @@ class App extends Component {
       newTodo: '',
       todoList: this.state.todoList
     })
+    
   }
 
 //设置完成 未完成
   toggle(e, todo) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
+    
   }
   //删除待办
   delete(event, todo) {
     todo.deleted = true
     this.setState(this.state)
+    
   }
+  componentDidUpdate(){
+     localStore.save('todoList', this.state.todoList)
+   }
 }
 //待办id
 let id = 0
