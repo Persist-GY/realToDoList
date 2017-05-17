@@ -4,15 +4,16 @@ import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import 'normalize.css'
 import './reset.css'
-import * as localStore from './localStore'
-
+import UserDialog from './UserDialog'
+import { getCurrentUser, signOut } from './leanCloud'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      user: getCurrentUser() || {},
       newTodo: '',
-      todoList: localStore.load('todoList') || []
+      todoList: []
     }
   }
   render() {
@@ -31,7 +32,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>我的待办</h1>
+        <h1>{this.state.user.username || '我'}的待办
+           {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
+        </h1>
         <dic className="inputWrapper">
           <TodoInput content={this.state.newTodo}
             onChange={this.changeTitle.bind(this)}
@@ -40,6 +43,11 @@ class App extends Component {
         <ol className="todoList">
           {todos}
         </ol>
+        {this.state.user.id ?
+          null :
+          <UserDialog
+            onSignUp={this.onSignUpOrSignIn.bind(this)}
+            onSignIn={this.onSignUpOrSignIn.bind(this)} />}
       </div>
     );
   }
@@ -50,7 +58,7 @@ class App extends Component {
       newTodo: event.target.value,
       todoList: this.state.todoList
     })
-   
+
   }
 
   //添加待办事项
@@ -65,30 +73,41 @@ class App extends Component {
       newTodo: '',
       todoList: this.state.todoList
     })
-    
+
   }
 
-//设置完成 未完成
+  //设置完成 未完成
   toggle(e, todo) {
     todo.status = todo.status === 'completed' ? '' : 'completed'
     this.setState(this.state)
-    
+
   }
   //删除待办
   delete(event, todo) {
     todo.deleted = true
     this.setState(this.state)
-    
+
   }
-  componentDidUpdate(){
-     localStore.save('todoList', this.state.todoList)
-   }
+
+  //点击注册或者登录时  更新username
+  onSignUpOrSignIn(user) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = user
+    this.setState(stateCopy)
+  }
+  //登出
+  signOut() {
+    signOut()
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.user = {}
+    this.setState(stateCopy)
+  }
 }
 //待办id
 let id = 0
 
 function idMaker() {
-  id += 1
+  id = 1
   return id
 }
 export default App;
