@@ -10,11 +10,17 @@
    border: 1px solid #aaa;
    box-shadow: 0 0 1em hsla(0,0%,0%,0.35);
  }
- 
+
  .UserDialog > nav:first-child{ padding: 1em; margin-left: -2em;}
  .UserDialog > nav:first-child label{ margin-left: 2em; cursor: pointer;}
  .UserDialog > .panes { padding: 0 1em 1em; }
- 
+ .UserDialog form{text-align: center;}
  .UserDialog form>.row{ display: flex; padding: .3em 0; }
  .UserDialog form>.row>label:first-child{ width: 4em; }
- .UserDialog form>.row.actions{ padding-left: 4em; }
+ .UserDialog form>.row.actions{ padding-left: 6.5em; }
+ .UserDialog form>.row.actions>button{ padding: 10px; cursor:pointer;background-color: purple;color:#fff;padding-left: 20px;padding-right: 20px;border-radius: 5px;outline: none; }
+ .UserDialog form>.row.actions>button:hover {opacity: 0.7;}
+ .UserDialog > nav>label.login{
+    float: right;
+ }
+ .UserDialog form>.row.actions>button.login{background: blue;}

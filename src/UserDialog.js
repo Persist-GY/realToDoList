@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './UserDialog.css'
 import { signUp, signIn } from './leanCloud'
-
-
+import {jsonParseObj} from './JSON'
+import {showStatusCodeChinese} from './status'
 
 export default class UserDialog extends Component {
     constructor(props) {
@@ -28,30 +28,10 @@ export default class UserDialog extends Component {
         e.preventDefault()
         let {username, password} = this.state.formData
         let success = (user) => {
-            console.log(user)
             this.props.onSignUp.call(null, user)
         }
         let error = (error) => {
-            switch (error.code) {
-                case 202:
-                    alert('用户名已被占用')
-                    break
-                case 214:
-                    alert('手机号码已经被注册。')
-                    break
-                case 201:
-                    alert('密码不能为空')
-                    break
-                case 203:
-                    alert('电子邮箱地址已经被占用')
-                    break
-                case 217:
-                    alert('无效的用户名，不允许空白用户名。')
-                    break
-                default:
-                    alert(error)
-                    break
-            }
+            showStatusCodeChinese(error)
         }
         signUp(username, password, success, error)
     }
@@ -64,32 +44,13 @@ export default class UserDialog extends Component {
             this.props.onSignIn.call(null, user)
         }
         let error = (error) => {
-            switch (error.code) {
-                case 210:
-                    alert('用户名与密码不匹配')
-                    break
-                case 205:
-                    alert('找不到电子邮箱地址对应的用户')
-                    break
-                case 211:
-                    alert('找不到用户。')
-                    break
-                case 213:
-                    alert('手机号码对应的用户不存在')
-                    break
-                case 200:
-                    alert('手机号码对应的用户不存在')
-                    break
-                default:
-                    alert(error)
-                    break
-            }
+            showStatusCodeChinese(error)
         }
         signIn(username, password, success, error)
     }
     //监听用户名 密码输入内容
     changeFormData(key, e) {
-        let stateCopy = JSON.parse(JSON.stringify(this.state))  // 用 JSON 深拷贝
+        let stateCopy = jsonParseObj(this.state)  // 用 JSON 深拷贝
         stateCopy.formData[key] = e.target.value
         this.setState(stateCopy)
     }
@@ -128,7 +89,7 @@ export default class UserDialog extends Component {
                         onChange={this.changeFormData.bind(this, 'password')} />
                 </div>
                 <div className="row actions">
-                    <button type="submit">登录</button>
+                    <button className='login' type="submit">登录</button>
                 </div>
             </form>
         )
@@ -142,8 +103,8 @@ export default class UserDialog extends Component {
                                 checked={this.state.selected === 'signUp'}
                                 onChange={this.switch.bind(this)}
                             /> 注册</label>
-                        <label>
-                            <input type="radio" value="signIn"
+                        <label className='login'>
+                            <input  type="radio" value="signIn"
                                 checked={this.state.selected === 'signIn'}
                                 onChange={this.switch.bind(this)}
                             /> 登录</label>
