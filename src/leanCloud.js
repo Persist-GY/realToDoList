@@ -65,6 +65,7 @@ export function getCurrentUserToDoList(fn) {
 export function getCurrentUser() {
   let user = AV.User.current()
   if (user) {
+    console.log(user)
     return getUserFromAVUser(user)
   } else {
     return null
