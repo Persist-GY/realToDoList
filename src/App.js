@@ -17,7 +17,7 @@ class App extends Component {
       user: getCurrentUser() || {},
       newTodo: '',
       todoList: [],
-      type: 1
+      type: 1 //判断当前是1全部  2未完成  3已完成
     }
     let user = getCurrentUser()
     if (user) {
@@ -110,7 +110,7 @@ class App extends Component {
   }
 
   //获取当前时间
-   getNowFormatDate() {
+  getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
     var seperator2 = ":";
@@ -119,22 +119,22 @@ class App extends Component {
     var hour = date.getHours();
     var min = date.getMinutes();
     if (month >= 1 && month <= 9) {
-        month = "0" + month;
+      month = "0" + month;
     }
     if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
+      strDate = "0" + strDate;
     }
     if (hour >= 0 && hour <= 9) {
-        hour = "0" + hour;
+      hour = "0" + hour;
     }
     if (min >= 0 && min <= 9) {
-        min = "0" + min;
+      min = "0" + min;
     }
     var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + " " + hour + seperator2 + min
-            
+      + " " + hour + seperator2 + min
+
     return currentdate;
-}
+  }
   //添加待办事项
   addTodo(event) {
     let newTodo = {
@@ -145,14 +145,26 @@ class App extends Component {
     }
     TodoModel.create(newTodo, (id) => {
       newTodo.id = id
-      //如果当前是所有todo  就显示 否则不显示 
-      if (this.state.type === 1 || this.state.type === 2) {
-        this.state.todoList.push(newTodo)
-        let stateCopy = jsonParseObj(this.state)
-        stateCopy.todoList = this.state.todoList
-        stateCopy.newTodo = ''
-        this.setState(stateCopy)
-      }else{
+      //如果当前是所有todo或者未完成  就显示 否则不显示  解决：如果用户在获取 Todo 的过程中新建了一个 Todo 怎么办？
+      if (this.state.type === 1) {
+
+        TodoModel.getByUser(1, (todos) => {
+          let stateCopy = jsonParseObj(this.state)
+          stateCopy.todoList = todos
+          stateCopy.type = 1
+          stateCopy.newTodo = ''
+          this.setState(stateCopy)
+        })
+      }else if (this.state.type === 2) {
+
+        TodoModel.getByUser(2, (todos) => {
+          let stateCopy = jsonParseObj(this.state)
+          stateCopy.todoList = todos
+          stateCopy.type = 2
+          stateCopy.newTodo = ''
+          this.setState(stateCopy)
+        })
+      } else {
         let stateCopy = jsonParseObj(this.state)
         stateCopy.newTodo = ''
         this.setState(stateCopy)
@@ -193,7 +205,7 @@ class App extends Component {
   onSignUpOrSignIn(user) {
     let stateCopy = jsonParseObj(this.state)
     stateCopy.user = user
-    TodoModel.getByUser(1,(todos) => {
+    TodoModel.getByUser(1, (todos) => {
       stateCopy.todoList = todos
       this.setState(stateCopy)
     })
