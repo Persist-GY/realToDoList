@@ -1,11 +1,13 @@
 .UserDialog-Wrapper{ 
   /*全屏*/      position: fixed; top: 0; left: 0; bottom: 0; right: 0; 
    /*内容居中*/  display: flex; justify-content: center; align-items: center;
+   background-color: #ccc;
    background: url(bg.jpg);
    background-position: initial;
    background-repeat: no-repeat;
    background-position: 0 0;
    background-size: cover;
+   
    
  }
  .UserDialog{
