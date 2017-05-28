@@ -40,7 +40,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1><span>ToDoList By {this.state.user.username || ''}</span>
+        <h1><span>ToDoList By {this.state.user.username || 'User'}</span>
           {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
         </h1>
         <dic className="inputWrapper">
@@ -51,11 +51,13 @@ class App extends Component {
         <ol className="todoList">
           {todo}
         </ol>
-        <Mark all={this.getAllTodoList.bind(this)}
+        {this.state.user.id ?
+          <Mark all={this.getAllTodoList.bind(this)}
           uncomplete={this.getUnCompleteTodoList.bind(this)}
           complete={this.getCompleteTodoList.bind(this)}
           delete={this.getDeleteTodoList.bind(this)}
-        />
+         />
+        : null }
         {this.state.user.id ?
           null :
           <UserDialog
