@@ -193,7 +193,7 @@ class App extends Component {
   onSignUpOrSignIn(user) {
     let stateCopy = jsonParseObj(this.state)
     stateCopy.user = user
-    TodoModel.getByUser((todos) => {
+    TodoModel.getByUser(1,(todos) => {
       stateCopy.todoList = todos
       this.setState(stateCopy)
     })
