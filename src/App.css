@@ -10,14 +10,23 @@
    box-shadow: 0 0 1em hsla(0,0%,0%,0.15);
 }
 .App > .todoList> li:nth-child(odd){
-   background: #eee;
+   /*background: #eee;*/
+   box-shadow: 2px 2px 2px 1px blue;
  }
  .App > .todoList> li:nth-child(even){
-   background: transparent;
+   /*background: transparent;*/
+   box-shadow: 2px 2px 2px 1px purple;
+ }
+ .App > .todoList> li:hover {
+   transform: scale(1.5,1.5);
+ }
+ .App>h1{
+   text-align: center;
  }
 .App>h1>span {
   color: blue;
 }
+
 .App>h1>button{
   font-size: 15px;
   margin-left: 10px;
@@ -26,4 +35,44 @@
   /*border-radius: 2px;*/
   cursor: pointer;
   outline: none;
+  border:0;
+  background: none;
+  display: none;
 }
+.App>h1:hover>button{
+   display: inline-block;
+}
+#root {
+  background: url(bg.jpg);
+   background-position: initial;
+   background-repeat: no-repeat;
+   background-position: 0 0;
+   background-size: cover;
+}
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.mark > button {
+  padding: 0 10px;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 18px;
+  border: 0;
+  color: #ccc;
+  border-left: 1px solid #ccc;
+}
+.mark > button:last-child {
+  border-right: 1px solid #ccc;
+}
+.mark > button.active {
+  color: blue;
+}
+.mark > button:hover {
+  color: red;
+}
+

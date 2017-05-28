@@ -1,26 +1,70 @@
 .UserDialog-Wrapper{ 
   /*全屏*/      position: fixed; top: 0; left: 0; bottom: 0; right: 0; 
    /*内容居中*/  display: flex; justify-content: center; align-items: center;
+   background: url(bg.jpg);
+   background-position: initial;
+   background-repeat: no-repeat;
+   background-position: 0 0;
+   background-size: cover;
+   
  }
  .UserDialog{
    border: 1px solid;
    border-radius: 4px;
-   min-width: 20em;
-   background: white;
+   min-width: 35em;
+   background: transparent;
    border: 1px solid #aaa;
    box-shadow: 0 0 1em hsla(0,0%,0%,0.35);
  }
 
- .UserDialog > nav:first-child{ padding: 1em; margin-left: -2em;}
- .UserDialog > nav:first-child label{ margin-left: 2em; cursor: pointer;}
- .UserDialog > .panes { padding: 0 1em 1em; }
+ .UserDialog .signInOrSignUp > nav:first-child{ padding: 1em;}
+ .UserDialog .signInOrSignUp > nav:first-child label{cursor: pointer;font-size: 2em;text-align: center;}
+ .UserDialog .signInOrSignUp > nav:first-child label>input{transform: scale(1.6);vertical-align:middle;margin-top:-10px;}
+  .UserDialog .signInOrSignUp > nav:first-child label>input:checked{background: purple;}
+ .UserDialog .signInOrSignUp > nav:first-child label>span{display: inline-block;}
+ .UserDialog .signInOrSignUp > nav:first-child .signIn{float: right;}
+ .UserDialog .signInOrSignUp > .panes { padding: 0 1em 1em; }
+ .UserDialog .forgotPassword > h3 { padding: 1em; }
+ .UserDialog .forgotPassword > form { padding: 0 1em 1em; }
+
  .UserDialog form{text-align: center;}
- .UserDialog form>.row{ display: flex; padding: .3em 0; }
- .UserDialog form>.row>label:first-child{ width: 4em; }
- .UserDialog form>.row.actions{ padding-left: 6.5em; }
- .UserDialog form>.row.actions>button{ padding: 10px; cursor:pointer;background-color: purple;color:#fff;padding-left: 20px;padding-right: 20px;border-radius: 5px;outline: none; }
+ .UserDialog form>.row{ display: flex; padding: .3em 0;align-items: center; }
+ .UserDialog form>.row>label:first-child{ width: 4em; font-size: 1.5em;}
+ .UserDialog form>.row.actions{display: flex; align-items: center;text-align: center;justify-content: center;}
+ .UserDialog form>.row.actions button.login,button.forget{ margin-right: .5em; margin-left: 3em;}
+ .UserDialog button{font: inherit; padding: .2em;}
+ .UserDialog form>.row.actions>button{ padding: 10px; cursor:pointer;background-color: purple;color:#fff;padding-left: 20px;padding-right: 20px;border-radius: 5px;outline: none;display: inline-block; }
  .UserDialog form>.row.actions>button:hover {opacity: 0.7;}
+ .UserDialog form>.row.actions>a {font-size: 15px;margin-top:1em;}
+ .UserDialog form>.row.actions>a:hover {color:red;}
  .UserDialog > nav>label.login{
     float: right;
  }
  .UserDialog form>.row.actions>button.login{background: blue;}
+  .UserDialog form>.row.actions>button.forget{background: green;}
+ .UserDialog form>.row>.signUp-text {outline: none;font-size: 1.2em;border:0;background: none;margin:15px 0;animation: 0.8s move linear forwards; }
+ .UserDialog form>.row>input.signUp-text:focus {color: purple;}
+ .UserDialog form>.row>input.signIn-text {outline: none;font-size: 1.2em;border:0;background: transparent !important;margin:15px 0;animation: 0.8s moveIn linear forwards; }
+ .UserDialog form>.row>input.signIn-text:focus {color: blue;}
+ .UserDialog form>.row>input.forget {outline: none;font-size: 1.2em;border:0;background: transparent !important;margin:15px 0; border-bottom: 1px solid green;min-width: 22em; }
+ .UserDialog form>.row>input.forget:focus {color: green;}
+ @keyframes move {
+   from {
+     min-width:0em;
+     border-bottom: 0; 
+   }
+   to {
+     min-width:22em;
+     border-bottom: 1px solid purple;
+   }
+ }
+ @keyframes moveIn {
+   from {
+     min-width:0em;
+     border-bottom: 0; 
+   }
+   to {
+     min-width:22em;
+     border-bottom: 1px solid blue;
+   }
+ }

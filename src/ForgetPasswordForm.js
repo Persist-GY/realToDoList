@@ -1,0 +1,24 @@
+import React, {Component} from 'react';
+ 
+ export default class ForgetPasswordForm extends Component {
+   render () {
+     return (
+       <div className="forgotPassword">
+         <h3>
+           重置密码
+         </h3>
+         <form className="forgotPassword" onSubmit={this.props.onSubmit}> 
+           <div className="row">
+             <label>邮箱</label>
+             <input className='forget' type="text" placeholder='请输入绑定邮箱' value={this.props.formData.email}
+               onChange={this.props.onChange.bind(null, 'email')}/>
+           </div>
+           <div className="row actions">
+             <button className='forget' type="submit">发送重置邮件</button>
+             <a href="#" onClick={this.props.onSignIn}>返回登录</a>
+           </div>
+         </form>
+       </div>
+     )
+   }
+ }

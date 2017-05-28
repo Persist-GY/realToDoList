@@ -5,3 +5,12 @@
    font-size: 16px;
    padding: 0 .2em;
  }
+ .TodoInput:focus{
+   color: blue;
+ }
+ .App>.inputWrapper>input{
+  outline: none;
+  border: 0;
+  background: none;
+  border-bottom: 1px solid blue;
+}
