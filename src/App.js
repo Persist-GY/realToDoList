@@ -27,6 +27,8 @@ class App extends Component {
   }
 
   render() {
+
+    //所有待办
     let todo = this.state.todoList
       .filter((item) => !item.deleted)
       .map((item, index) => {
@@ -37,7 +39,10 @@ class App extends Component {
           </li>
         )
       })
-
+//已完成
+let completeTodo = this.state.todoList
+.filter((item) => !item.deleted)
+.filter((item) => item.status === 'completed')
     return (
       <div className="App">
         <h1><span>ToDoList By {this.state.user.username || 'User'}</span>
@@ -51,13 +56,22 @@ class App extends Component {
         <ol className="todoList">
           {todo}
         </ol>
+        <div className="bottom-label">
+          {this.state.type === 2?null:<label className='completed'>{completeTodo.length} Completed</label>}
+          {this.state.todoList.filter((item) => !item.deleted).length === 0 ?
+            null
+            : <button className='set-completed' onClick={this.setCompleted.bind(this)}>All completed</button>}
+          {completeTodo.length === 0 ?
+            null
+            : <button className='clear-completed' onClick={this.clearCompleted.bind(this)}>Clear completed</button>}
+        </div>
         {this.state.user.id ?
           <Mark all={this.getAllTodoList.bind(this)}
-          uncomplete={this.getUnCompleteTodoList.bind(this)}
-          complete={this.getCompleteTodoList.bind(this)}
-          delete={this.getDeleteTodoList.bind(this)}
-         />
-        : null }
+            uncomplete={this.getUnCompleteTodoList.bind(this)}
+            complete={this.getCompleteTodoList.bind(this)}
+            delete={this.getDeleteTodoList.bind(this)}
+          />
+          : null}
         {this.state.user.id ?
           null :
           <UserDialog
@@ -65,6 +79,25 @@ class App extends Component {
             onSignIn={this.onSignUpOrSignIn.bind(this)} />}
       </div>
     );
+  }
+
+  //删除所有已完成待办
+  clearCompleted() {
+    let arr = this.state.todoList.filter((item) => !item.deleted).filter((item) => item.status === 'completed')
+    for (let i = 0; i < arr.length; i++) {
+      let obj = arr[i]
+      let e = ''
+      this.delete(e, obj)
+    }
+  }
+  //设置所有待办已完成，未完成切换
+  setCompleted() {
+    let arr = this.state.todoList.filter((item) => !item.deleted)
+    for (let i = 0; i < arr.length; i++) {
+      let obj = arr[i]
+      let e = ''
+      this.toggle(e, obj)
+    }
   }
   //获取所有待办
   getAllTodoList() {
@@ -157,7 +190,7 @@ class App extends Component {
           stateCopy.newTodo = ''
           this.setState(stateCopy)
         })
-      }else if (this.state.type === 2) {
+      } else if (this.state.type === 2) {
 
         TodoModel.getByUser(2, (todos) => {
           let stateCopy = jsonParseObj(this.state)
