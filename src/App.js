@@ -35,14 +35,14 @@ class App extends Component {
         return ( // 为什么这里要加个括号？这是动手题3 🐸 不加小括号，意思是直接返回当前行后面空，不会走下面另一行的代码
           <li key={index}>
             <TodoItem todo={item} onToggle={this.toggle.bind(this)}
-              onDelete={this.delete.bind(this)} />
+              onDelete={this.delete.bind(this)} changeDate={this.changeDate.bind(this)} />
           </li>
         )
       })
-//已完成
-let completeTodo = this.state.todoList
-.filter((item) => !item.deleted)
-.filter((item) => item.status === 'completed')
+    //已完成
+    let completeTodo = this.state.todoList
+      .filter((item) => !item.deleted)
+      .filter((item) => item.status === 'completed')
     return (
       <div className="App">
         <h1><span>ToDoList By {this.state.user.username || 'User'}</span>
@@ -57,7 +57,7 @@ let completeTodo = this.state.todoList
           {todo}
         </ol>
         <div className="bottom-label">
-          {this.state.type === 2?null:<label className='completed'>{completeTodo.length} Completed</label>}
+          {this.state.type === 2 ? null : <label className='completed'>{completeTodo.length} Completed</label>}
           {this.state.todoList.filter((item) => !item.deleted).length === 0 ?
             null
             : <button className='set-completed' onClick={this.setCompleted.bind(this)}>All completed</button>}
@@ -148,25 +148,25 @@ let completeTodo = this.state.todoList
   getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
-    var seperator2 = ":";
+    // var seperator2 = ":";
     var month = date.getMonth() + 1;
     var strDate = date.getDate();
-    var hour = date.getHours();
-    var min = date.getMinutes();
+    // var hour = date.getHours();
+    // var min = date.getMinutes();
     if (month >= 1 && month <= 9) {
       month = "0" + month;
     }
     if (strDate >= 0 && strDate <= 9) {
       strDate = "0" + strDate;
     }
-    if (hour >= 0 && hour <= 9) {
-      hour = "0" + hour;
-    }
-    if (min >= 0 && min <= 9) {
-      min = "0" + min;
-    }
+    // if (hour >= 0 && hour <= 9) {
+    //   hour = "0" + hour;
+    // }
+    // if (min >= 0 && min <= 9) {
+    //   min = "0" + min;
+    // }
     var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-      + " " + hour + seperator2 + min
+      // + " " + hour + seperator2 + min
 
     return currentdate;
   }
@@ -235,7 +235,15 @@ let completeTodo = this.state.todoList
       this.setState(this.state)
     })
   }
+  //选择日期
+  changeDate(event, todo) {
+    todo.date = event.target.value
+    TodoModel.update(todo, () => {
+      this.setState(this.state)
+    }, (error) => {
 
+    })
+  }
   //点击注册或者登录时  更新username
   onSignUpOrSignIn(user) {
     let stateCopy = jsonParseObj(this.state)

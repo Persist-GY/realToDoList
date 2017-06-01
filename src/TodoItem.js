@@ -10,11 +10,18 @@ export default class TodoItem extends Component {
           <span className={this.props.todo.status === 'completed' ? 'title active' : 'title'}>{this.props.todo.title}</span>
           <button onClick={this.delete.bind(this)}>X</button>
         </div>
-        <div className='date'>{this.props.todo.date}</div>
+        <input type='date' onChange={this.changeDate.bind(this)} value={this.props.todo.date===''?'':this.props.todo.date} className='date'/>
       </div>
 
     )
   }
+
+//选择日期
+changeDate(e) {
+  
+  this.props.changeDate(e, this.props.todo)
+}
+
   //设置待办完成 未完成
   toggle(e) {
 

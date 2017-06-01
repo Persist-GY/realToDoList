@@ -92,7 +92,7 @@ export function signIn(username, password, successFn, errorFn) {
 export function postToDoList(todo) {
   let user = AV.User.current()
   user.attributes.todo = todo
-  console.log(user, todo)
+  // console.log(user, todo)
   user.save().then(function (todo) {
     // console.log(todo.id);
   }, function (error) {
@@ -125,7 +125,7 @@ export const TodoModel = {
           return { id: t.id, ...t.attributes }
         })
         successFn.call(null, array)
-        console.log(response)
+        // console.log(response)
       }, (error) => {
         errorFn && errorFn.call(null, error)
 
@@ -192,12 +192,13 @@ export const TodoModel = {
     });
   },
   //改
-  update({id, title, status, deleted}, successFn, errorFn) {
+  update({id, title, status, deleted,date}, successFn, errorFn) {
     // 文档 https://leancloud.cn/docs/leanstorage_guide-js.html#更新对象
     let todo = AV.Object.createWithoutData('Todo', id)
     title !== undefined && todo.set('title', title)
     status !== undefined && todo.set('status', status)
     deleted !== undefined && todo.set('deleted', deleted)
+    date !== undefined && todo.set('date', date)
     // 为什么我要像上面那样写代码？
     // 考虑如下场景
     // update({id:1, title:'hi'})
