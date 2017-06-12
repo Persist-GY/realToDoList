@@ -94,9 +94,23 @@ class App extends Component {
   setCompleted() {
     let arr = this.state.todoList.filter((item) => !item.deleted)
     for (let i = 0; i < arr.length; i++) {
-      let obj = arr[i]
-      let e = ''
-      this.toggle(e, obj)
+      let todo = arr[i]
+      let oldStatus = todo.status
+    todo.status = todo.status = 'completed' 
+    TodoModel.update(todo, () => {
+
+      //判断当前是哪个type 所有 未完成 已完成 
+      if (this.state.type === 1) {
+        (this.getAllTodoList.bind(this))()
+      } else if (this.state.type === 2) {
+        (this.getUnCompleteTodoList.bind(this))()
+      } else if (this.state.type === 3) {
+        (this.getCompleteTodoList.bind(this))()
+      }
+    }, (error) => {
+      todo.status = oldStatus
+      this.setState(this.state)
+    })
     }
   }
   //获取所有待办
